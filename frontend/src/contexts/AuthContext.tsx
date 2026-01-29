@@ -34,7 +34,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
-    
+
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
@@ -47,7 +47,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const response = await axios.post('/api/auth/login', { email, password });
       const { token: newToken, user: newUser } = response.data;
-      
+
       setToken(newToken);
       setUser(newUser);
       localStorage.setItem('token', newToken);
@@ -57,13 +57,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Better error handling
       if (error.response) {
         // Server responded with error
-        const errorMessage = error.response.data?.message || 
-                           (error.response.data?.errors?.[0]?.msg) ||
-                           'Login failed. Please check your credentials.';
+        const errorMessage = error.response.data?.message ||
+          (error.response.data?.errors?.[0]?.msg) ||
+          'Login failed. Please check your credentials.';
         throw new Error(errorMessage);
       } else if (error.request) {
         // Request made but no response (server not running)
-        throw new Error('Cannot connect to server. Please make sure the backend is running on port 5000.');
+        throw new Error('Cannot connect to server. Make sure the backend is running and the API URL is correct.');
       } else {
         throw new Error('An unexpected error occurred. Please try again.');
       }
@@ -74,7 +74,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const response = await axios.post('/api/auth/register', { name, email, password });
       const { token: newToken, user: newUser } = response.data;
-      
+
       setToken(newToken);
       setUser(newUser);
       localStorage.setItem('token', newToken);
@@ -84,13 +84,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Better error handling
       if (error.response) {
         // Server responded with error
-        const errorMessage = error.response.data?.message || 
-                           (error.response.data?.errors?.[0]?.msg) ||
-                           'Registration failed. Please try again.';
+        const errorMessage = error.response.data?.message ||
+          (error.response.data?.errors?.[0]?.msg) ||
+          'Registration failed. Please try again.';
         throw new Error(errorMessage);
       } else if (error.request) {
         // Request made but no response (server not running)
-        throw new Error('Cannot connect to server. Please make sure the backend is running on port 5000.');
+        throw new Error('Cannot connect to server. Make sure the backend is running and the API URL is correct.');
       } else {
         throw new Error('An unexpected error occurred. Please try again.');
       }

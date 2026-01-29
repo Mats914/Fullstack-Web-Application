@@ -1,11 +1,19 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import { body, validationResult } from 'express-validator';
 import Task from '../models/Task.js';
 import { authenticate } from '../middleware/auth.js';
 
 const router = express.Router();
 
-// All routes require authentication
+const requireDb = (req, res, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({ message: 'Database unavailable. Set MONGODB_URI and ensure MongoDB is running.' });
+  }
+  next();
+};
+
+router.use(requireDb);
 router.use(authenticate);
 
 // Get all tasks for the authenticated user

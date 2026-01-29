@@ -14,7 +14,7 @@
     "passwordMin": "Lösenord (minst 6 tecken)"
   },
   "server": {
-    "offline": "Backend-servern är inte ansluten. Se till att servern körs på port 5000.",
+    "offline": "Backend-servern är inte ansluten. Se till att backend körs och att API-URL:en är korrekt.",
     "checking": "Kontrollerar serveranslutning...",
     "warning": "Varning:"
   },

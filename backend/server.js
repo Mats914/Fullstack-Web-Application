@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Root route - for testing server status
 app.get('/', (req, res) => {
-  res.json({ 
+  res.json({
     message: 'Backend is live!',
     status: 'OK',
     endpoints: {
@@ -42,8 +42,8 @@ app.get('/', (req, res) => {
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'OK', 
+  res.json({
+    status: 'OK',
     message: 'Server is running',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development'
@@ -52,8 +52,8 @@ app.get('/api/health', (req, res) => {
 
 // Health check for Render (uses /healthz path)
 app.get('/healthz', (req, res) => {
-  res.json({ 
-    status: 'OK', 
+  res.json({
+    status: 'OK',
     message: 'Server is healthy',
     timestamp: new Date().toISOString()
   });
@@ -82,65 +82,36 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGODB_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
 
-// Validate required environment variables
 if (!MONGO_URI) {
-  console.error('ERROR: MONGODB_URI is not defined in environment variables');
-  console.error('Please set MONGODB_URI in your environment variables (Render Dashboard → Environment)');
-  process.exit(1);
+  console.warn('⚠️  MONGODB_URI not set. Set it in .env or environment variables for auth/tasks.');
 }
-
 if (!JWT_SECRET) {
-  console.error('ERROR: JWT_SECRET is not defined in environment variables');
-  console.error('Please set JWT_SECRET in your environment variables (Render Dashboard → Environment)');
-  process.exit(1);
+  console.warn('⚠️  JWT_SECRET not set. Set it in .env or environment variables for auth.');
 }
 
-// Connect to MongoDB
+// Connect to MongoDB (optional at startup — auth/tasks return 503 if not connected)
 const connectDB = async () => {
+  if (!MONGO_URI) return false;
   try {
-    // Validate MongoDB URI format
     if (!MONGO_URI.startsWith('mongodb://') && !MONGO_URI.startsWith('mongodb+srv://')) {
-      console.error('ERROR: Invalid MongoDB URI format. Must start with mongodb:// or mongodb+srv://');
-      console.error('Current URI format:', MONGO_URI.substring(0, 20) + '...');
+      console.error('Invalid MongoDB URI. Must start with mongodb:// or mongodb+srv://');
       return false;
     }
-
     await mongoose.connect(MONGO_URI);
-    console.log('✅ MongoDB connected successfully');
-    
-    // Log connection info (hide credentials)
-    const safeURI = MONGO_URI.replace(/\/\/([^:]+):([^@]+)@/, '//$1:***@');
-    console.log(`📦 Connected to: ${safeURI}`);
-    
-    // Log database name if available
+    console.log('✅ MongoDB connected');
     const dbName = mongoose.connection.db?.databaseName;
-    if (dbName) {
-      console.log(`📊 Database: ${dbName}`);
-    }
+    if (dbName) console.log(`📊 Database: ${dbName}`);
     return true;
-  } catch (error) {
-    console.error('❌ MongoDB connection error:', error.message);
-    console.error('💡 Make sure:');
-    console.error('   1. MONGODB_URI is set correctly in Render Environment Variables');
-    console.error('   2. MongoDB Atlas IP whitelist includes Render IPs (or 0.0.0.0/0 for testing)');
-    console.error('   3. MongoDB Atlas credentials are correct');
-    console.error('   4. MongoDB Atlas cluster is running');
+  } catch (err) {
+    console.error('❌ MongoDB connection error:', err.message);
     return false;
   }
 };
 
-// Start server first, then connect to MongoDB
 app.listen(PORT, async () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`📡 Server URL: http://localhost:${PORT}`);
-  
-  // Connect to MongoDB after server starts
-  const connected = await connectDB();
-  if (!connected) {
-    console.warn('⚠️  Server started but MongoDB connection failed. Some features may not work.');
-    console.warn('⚠️  Check Render logs and MongoDB Atlas settings.');
-  }
+  console.log(`🚀 Server on http://localhost:${PORT}`);
+  const ok = await connectDB();
+  if (!ok) console.warn('⚠️  MongoDB not connected. Set MONGODB_URI for auth/tasks.');
 });
 
 export default app;

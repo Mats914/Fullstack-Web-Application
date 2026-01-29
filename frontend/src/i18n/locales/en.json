@@ -14,7 +14,7 @@
     "passwordMin": "Password (min 6 characters)"
   },
   "server": {
-    "offline": "Backend server is not connected. Please make sure the server is running on port 5000.",
+    "offline": "Backend server is not connected. Make sure the backend is running and the API URL is correct.",
     "checking": "Checking server connection...",
     "warning": "Warning:"
   },

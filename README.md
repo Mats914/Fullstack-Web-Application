@@ -343,6 +343,7 @@ You can deploy this project to any platform that supports Node.js and static fil
 - **Heroku** - Traditional PaaS
 - **DigitalOcean App Platform** - Simple deployment
 - **AWS/GCP/Azure** - Enterprise solutions
+- **Replit** - See [REPLIT.md](./REPLIT.md) for frontend (port 5000) + backend (port 3001) setup and fixing "Server error during registration"
 
 ### General Deployment Steps
 
@@ -481,6 +482,7 @@ Created as a fullstack application template for learning and development.
 - 📖 [Frontend README](./frontend/README.md)
 - 📖 [Backend README](./backend/README.md)
 - 📖 [API Routes](./backend/ROUTES.md)
+- 📖 [Replit setup](./REPLIT.md)
 - 🔗 [GitHub Repository](https://github.com/Mats914/Fullstack-React-Node-MongoPostgreSQL-)
 
 **Local development (when running):**
