@@ -1,0 +1,75 @@
+{
+  "auth": {
+    "signIn": "Logga in på ditt konto",
+    "createAccount": "Skapa ditt konto",
+    "email": "E-postadress",
+    "password": "Lösenord",
+    "name": "Fullständigt namn",
+    "signInButton": "Logga in",
+    "signingIn": "Loggar in...",
+    "registerButton": "Registrera",
+    "creatingAccount": "Skapar konto...",
+    "noAccount": "Har du inget konto? Registrera",
+    "hasAccount": "Har du redan ett konto? Logga in",
+    "passwordMin": "Lösenord (minst 6 tecken)"
+  },
+  "server": {
+    "offline": "Backend-servern är inte ansluten. Se till att servern körs på port 5000.",
+    "checking": "Kontrollerar serveranslutning...",
+    "warning": "Varning:"
+  },
+  "dashboard": {
+    "title": "Uppgiftshanterare",
+    "welcome": "Välkommen, {{name}}!",
+    "myTasks": "Mina uppgifter",
+    "newTask": "+ Ny uppgift",
+    "loadingTasks": "Laddar uppgifter...",
+    "logout": "Logga ut"
+  },
+  "tasks": {
+    "noTasks": "Inga uppgifter än. Skapa din första uppgift!",
+    "title": "Titel",
+    "titleRequired": "Titel krävs",
+    "description": "Beskrivning",
+    "status": "Status",
+    "pending": "Väntande",
+    "inProgress": "Pågående",
+    "completed": "Klar",
+    "createTask": "Skapa uppgift",
+    "updateTask": "Uppdatera uppgift",
+    "cancel": "Avbryt",
+    "edit": "Redigera",
+    "delete": "Radera",
+    "created": "Skapad",
+    "createdSuccess": "Uppgift skapad framgångsrikt!",
+    "updatedSuccess": "Uppgift uppdaterad framgångsrikt!",
+    "deletedSuccess": "Uppgift raderad framgångsrikt!",
+    "deleteConfirm": "Är du säker på att du vill radera denna uppgift?",
+    "enterTitle": "Ange uppgiftstitel",
+    "enterDescription": "Ange uppgiftsbeskrivning"
+  },
+  "errors": {
+    "loginFailed": "Inloggning misslyckades. Försök igen.",
+    "registrationFailed": "Registrering misslyckades. Försök igen.",
+    "fetchTasksFailed": "Kunde inte ladda uppgifter",
+    "createTaskFailed": "Kunde inte skapa uppgift",
+    "updateTaskFailed": "Kunde inte uppdatera uppgift",
+    "deleteTaskFailed": "Kunde inte radera uppgift"
+  },
+  "weather": {
+    "title": "Väder",
+    "loading": "Laddar väder...",
+    "unavailable": "Väderdata inte tillgänglig",
+    "addApiKey": "Lägg till din OpenWeatherMap API-nyckel för att aktivera väderdata",
+    "feelsLike": "Känns som",
+    "humidity": "Luftfuktighet",
+    "demoNote": "Obs: Använder demodata. Konfigurera API-nyckel för riktigt väder.",
+    "changeCity": "Ändra stad",
+    "enterCity": "Sök eller välj stad",
+    "enterCountry": "Sök eller välj land",
+    "selectCountry": "Välj Land",
+    "selectCity": "Välj Stad",
+    "search": "Sök",
+    "noResults": "Inga resultat hittades"
+  }
+}

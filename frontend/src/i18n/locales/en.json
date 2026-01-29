@@ -1,0 +1,75 @@
+{
+  "auth": {
+    "signIn": "Sign in to your account",
+    "createAccount": "Create your account",
+    "email": "Email address",
+    "password": "Password",
+    "name": "Full name",
+    "signInButton": "Sign in",
+    "signingIn": "Signing in...",
+    "registerButton": "Register",
+    "creatingAccount": "Creating account...",
+    "noAccount": "Don't have an account? Register",
+    "hasAccount": "Already have an account? Sign in",
+    "passwordMin": "Password (min 6 characters)"
+  },
+  "server": {
+    "offline": "Backend server is not connected. Please make sure the server is running on port 5000.",
+    "checking": "Checking server connection...",
+    "warning": "Warning:"
+  },
+  "dashboard": {
+    "title": "Task Manager",
+    "welcome": "Welcome, {{name}}!",
+    "myTasks": "My Tasks",
+    "newTask": "+ New Task",
+    "loadingTasks": "Loading tasks...",
+    "logout": "Logout"
+  },
+  "tasks": {
+    "noTasks": "No tasks yet. Create your first task!",
+    "title": "Title",
+    "titleRequired": "Title is required",
+    "description": "Description",
+    "status": "Status",
+    "pending": "Pending",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "createTask": "Create Task",
+    "updateTask": "Update Task",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "created": "Created",
+    "createdSuccess": "Task created successfully!",
+    "updatedSuccess": "Task updated successfully!",
+    "deletedSuccess": "Task deleted successfully!",
+    "deleteConfirm": "Are you sure you want to delete this task?",
+    "enterTitle": "Enter task title",
+    "enterDescription": "Enter task description"
+  },
+  "errors": {
+    "loginFailed": "Login failed. Please try again.",
+    "registrationFailed": "Registration failed. Please try again.",
+    "fetchTasksFailed": "Failed to load tasks",
+    "createTaskFailed": "Failed to create task",
+    "updateTaskFailed": "Failed to update task",
+    "deleteTaskFailed": "Failed to delete task"
+  },
+  "weather": {
+    "title": "Weather",
+    "loading": "Loading weather...",
+    "unavailable": "Weather data unavailable",
+    "addApiKey": "Add your OpenWeatherMap API key to enable weather data",
+    "feelsLike": "Feels like",
+    "humidity": "Humidity",
+    "demoNote": "Note: Using demo data. Configure API key for real weather.",
+    "changeCity": "Change city",
+    "enterCity": "Search or select city",
+    "enterCountry": "Search or select country",
+    "selectCountry": "Select Country",
+    "selectCity": "Select City",
+    "search": "Search",
+    "noResults": "No results found"
+  }
+}
