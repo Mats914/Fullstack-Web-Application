@@ -32,8 +32,49 @@ This project can run on [Replit](https://replit.com) with the frontend and backe
 
 ## Ports
 
-- **Frontend** (Vite): port **5000**
-- **Backend** (Express): port **3001** (to avoid conflict)
+- **Frontend** (Vite): port **5000** → Replit Preview (default port 80)
+- **Backend** (Express): port **3001**
+
+---
+
+## Run button (مُوصى به): سكربت واحد يُشغّل الاثنين
+
+المشروع يتضمّن `.replit` و `scripts/start-replit.sh`. عند الضغط على **Run**:
+
+1. يُثبَّت `npm` للـ backend والـ frontend.
+2. يُشغَّل الـ backend على المنفذ **3001**.
+3. يُشغَّل الـ frontend (Vite) على المنفذ **5000** مع `host: true` (للـ Replit Preview).
+
+**المتطلّبات:**
+
+- **Secrets** (أدوات Replit → Secrets): أضف `MONGODB_URI` و `JWT_SECRET`.
+- الـ frontend يستخدم `VITE_PROXY_TARGET=http://localhost:3001` و `VITE_PORT=5000` من `.replit` → `[run.env]`.
+
+**المعاينة:** اختر المنفذ **80** (أو **5000**) في قائمة المنافذ في الـ Preview لرؤية الواجهة.
+
+---
+
+## بديل: Workflows (عمليتان منفصلتان)
+
+إذا لم يعمل الـ Run الموحّد، استخدم **Workflows** بتشغيل عمليتين **بالتوازي**:
+
+1. **Workflows** (أو ⌘K → Workflows) → **+ New Workflow**.
+2. أنشئ workflow باسم **Backend**:
+   - **Execute Shell Command**: `cd backend && npm install && npm run dev`
+   - وضع التنفيذ: **Sequential** (أو افتراضي).
+3. أنشئ workflow باسم **Frontend**:
+   - **Execute Shell Command**: `cd frontend && npm install && npm run dev`
+   - نفس الوضع.
+4. أنشئ workflow **Fullstack**:
+   - **Run Workflow** → Backend  
+   - **Run Workflow** → Frontend  
+   - وضع التنفيذ: **Parallel**.
+5. عيّن **Fullstack** كـ workflow للزر **Run** (القائمة بجانب Run).
+6. في **Secrets** أضف: `PORT=3001`, `MONGODB_URI`, `JWT_SECRET`, `VITE_PORT=5000`, `VITE_PROXY_TARGET=http://localhost:3001`.
+
+شغّل **Fullstack** وتأكّد أن الـ Console يعرض خرج الـ backend والـ frontend معاً.
+
+---
 
 ## 1. Backend
 
@@ -94,6 +135,19 @@ After fixing, you should see the specific 503 messages above instead of a generi
 
 - [ ] Backend running on port 3001
 - [ ] Frontend running on port 5000
-- [ ] `MONGODB_URI` set for backend
-- [ ] `JWT_SECRET` set for backend
-- [ ] `VITE_PROXY_TARGET=http://localhost:3001` set for frontend (and `VITE_PORT=5000` if you use it)
+- [ ] `MONGODB_URI` set (Secrets)
+- [ ] `JWT_SECRET` set (Secrets)
+- [ ] `VITE_PROXY_TARGET=http://localhost:3001` و `VITE_PORT=5000` (في `.replit` أو Secrets عند استخدام Workflows)
+
+---
+
+## 6. Vite لا يبدأ / Frontend لا يظهر
+
+إذا كان الـ **Backend** يعمل والـ **Frontend** (Vite) لا يظهر:
+
+1. **`host: true`** — تمت إضافته في `vite.config.ts` حتى يستمع Vite على `0.0.0.0` (مطلوب لـ Replit Preview).
+2. **تشغيل الأمرين معاً** — استخدام `&` في سطر واحد أحياناً يفشل. استخدم إمّا:
+   - **`scripts/start-replit.sh`** (الـ Run الحالي)، أو  
+   - **Workflows** بعمليتين (Backend + Frontend) **Parallel** كما في القسم أعلاه.
+3. **المنفذ 5000** — تأكّد أن لا يستهلكه بروسيس آخر. الـ Run script يُشغّل الـ backend أولاً على 3001 ثم الـ frontend على 5000.
+4. **المعاينة** — في Replit افتح **Preview** واختر المنفذ **80** أو **5000** (الواجهة).
