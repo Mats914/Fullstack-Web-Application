@@ -1,21 +1,21 @@
-# حل مشكلة 502 Bad Gateway على Render
+# Fixing 502 Bad Gateway on Render
 
-## 🔴 المشكلة: 502 Bad Gateway
+## The problem: 502 Bad Gateway
 
-هذا يعني أن السيرفر لا يعمل أو يتوقف بعد البدء.
+This usually means the server is not running or stops right after startup.
 
 ---
 
-## 🔍 الأسباب المحتملة:
+## Possible causes
 
-### 1. Environment Variables غير موجودة
+### 1. Missing environment variables
 
-**الحل:**
-- اذهب إلى Render Dashboard → Service → Environment
-- أضف هذه المتغيرات:
+**Fix:**
+- Go to Render Dashboard → Service → Environment
+- Add these variables:
 
 ```
-MONGODB_URI=mongodb+srv://motaseemalleje_db_user:qOLbMV7x6M0hLzka@cluster0.uezlmf8.mongodb.net/fullstack-app?retryWrites=true&w=majority
+MONGODB_URI=your_mongodb_atlas_connection_string
 ```
 
 ```
@@ -28,19 +28,19 @@ NODE_ENV=production
 
 ---
 
-### 2. MongoDB Atlas Network Access
+### 2. MongoDB Atlas network access
 
-**الحل:**
-1. اذهب إلى MongoDB Atlas Dashboard
+**Fix:**
+1. Go to MongoDB Atlas Dashboard
 2. Network Access → Add IP Address
-3. أضف: `0.0.0.0/0` (للاختبار)
-4. أو أضف IPs محددة لـ Render
+3. Add `0.0.0.0/0` (for testing)
+4. Or add specific Render IPs
 
 ---
 
-### 3. Build Command خاطئ
+### 3. Wrong build command
 
-**في Render Settings → Build & Deploy:**
+**In Render Settings → Build & Deploy:**
 
 **Build Command:**
 ```bash
@@ -56,13 +56,13 @@ node server.js
 ```
 backend
 ```
-*(إذا كان المشروع في مجلد backend)*
+*(if the project lives in the `backend` folder)*
 
 ---
 
-### 4. Health Check Path خاطئ
+### 4. Wrong health check path
 
-**في Render Settings → Health Checks:**
+**In Render Settings → Health Checks:**
 
 **Health Check Path:**
 ```
@@ -71,86 +71,80 @@ backend
 
 ---
 
-## 📋 Checklist للإصلاح:
+## Checklist
 
-- [ ] Environment Variables موجودة في Render
-  - [ ] `MONGODB_URI` موجود
-  - [ ] `JWT_SECRET` موجود
-  - [ ] `NODE_ENV=production` موجود
+- [ ] Environment variables set in Render
+  - [ ] `MONGODB_URI`
+  - [ ] `JWT_SECRET`
+  - [ ] `NODE_ENV=production`
 
 - [ ] MongoDB Atlas
-  - [ ] Network Access يسمح بـ Render IPs
-  - [ ] Database User موجود
-  - [ ] Cluster يعمل
+  - [ ] Network Access allows Render IPs
+  - [ ] Database user exists
+  - [ ] Cluster is running
 
-- [ ] Render Settings
+- [ ] Render settings
   - [ ] Build Command: `npm install`
   - [ ] Start Command: `node server.js`
-  - [ ] Root Directory: `backend` (إذا لزم الأمر)
+  - [ ] Root Directory: `backend` (if needed)
   - [ ] Health Check: `/healthz`
 
-- [ ] الكود محدث
-  - [ ] تم push آخر التحديثات إلى GitHub
-  - [ ] Render يقوم بـ Auto-Deploy
+- [ ] Code is up to date
+  - [ ] Latest changes pushed to GitHub
+  - [ ] Render auto-deploy is enabled
 
 ---
 
-## 🔧 خطوات الإصلاح السريع:
+## Quick fix steps
 
-### 1. تحقق من Logs
+### 1. Check logs
 
-في Render Dashboard → Logs:
-- ابحث عن أخطاء
-- ابحث عن "MongoDB connected successfully"
-- ابحث عن "Server running on port"
+In Render Dashboard → Logs:
+- Look for errors
+- Look for "MongoDB connected successfully"
+- Look for "Server running on port"
 
-### 2. أضف Environment Variables
+### 2. Add environment variables
 
-إذا كانت مفقودة، أضفها الآن.
+If any are missing, add them now.
 
-### 3. أعد النشر
+### 3. Redeploy
 
 - Manual Deploy → Deploy latest commit
-- أو انتظر Auto-Deploy
+- Or wait for auto-deploy
 
-### 4. تحقق من MongoDB Atlas
+### 4. Check MongoDB Atlas
 
-- تأكد أن Network Access يسمح بالاتصال
-- تأكد أن Cluster يعمل
-
----
-
-## 🧪 اختبار بعد الإصلاح:
-
-1. **Root Route:**
-   ```
-   https://backend-fullstack-react-node.onrender.com/
-   ```
-
-2. **Health Check:**
-   ```
-   https://backend-fullstack-react-node.onrender.com/api/health
-   ```
-
-3. **Render Health Check:**
-   ```
-   https://backend-fullstack-react-node.onrender.com/healthz
-   ```
+- Ensure Network Access allows connections
+- Ensure the cluster is running
 
 ---
 
-## 💡 نصائح:
+## Test after fixing
 
-1. **تحقق من Logs أولاً** - ستجد السبب الحقيقي هناك
-2. **Environment Variables مهمة جداً** - بدونها السيرفر لا يعمل
-3. **MongoDB Atlas Network Access** - يجب أن يسمح بالاتصال
-4. **Root Directory** - إذا كان المشروع في مجلد `backend`، ضعه في Render Settings
+1. **Root route:**  
+   `https://your-render-service.onrender.com/`
+
+2. **Health check:**  
+   `https://your-render-service.onrender.com/api/health`
+
+3. **Render health check:**  
+   `https://your-render-service.onrender.com/healthz`
 
 ---
 
-## 🆘 إذا استمرت المشكلة:
+## Tips
 
-1. تحقق من Render Logs بالكامل
-2. تأكد من أن جميع Environment Variables موجودة
-3. تأكد من MongoDB Atlas Network Access
-4. جرب Manual Deploy مرة أخرى
+1. **Check logs first** — they usually show the real cause
+2. **Environment variables matter** — the server will not run without them
+3. **MongoDB Atlas Network Access** — must allow connections
+4. **Root Directory** — if the app is in `backend`, set it in Render settings
+
+---
+
+## If the problem continues
+
+1. Review Render logs fully
+2. Confirm all environment variables are set
+3. Confirm MongoDB Atlas Network Access
+4. Try a manual deploy again

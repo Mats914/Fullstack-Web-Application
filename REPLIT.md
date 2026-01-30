@@ -4,29 +4,29 @@ This project can run on [Replit](https://replit.com) with the frontend and backe
 
 ---
 
-## استيراد المشروع إلى Replit (كيف ترى المشروع على Replit)
+## Importing the project to Replit
 
-إذا **لا ترى المشروع** على Replit، يجب أولاً **استيراده** من GitHub.
+If you **don’t see the project** on Replit, you need to **import it** from GitHub first.
 
-### الطريقة السريعة (Rapid import)
+### Rapid import
 
-1. افتح هذا الرابط في المتصفح (مستودعك على GitHub):
+1. Open this URL in your browser (your GitHub repo):
    ```
    https://replit.com/github.com/Mats914/Fullstack-React-Node-MongoPostgreSQL-
    ```
-2. اضغط **Enter** — سيُفتح Replit ويبدأ الاستيراد تلقائياً.
-3. سجّل الدخول إلى Replit إن طُلِب منك ذلك.
-4. بعد انتهاء الاستيراد، ستظهر لك واجهة المشروع (الملفات، المحرر، إلخ).
+2. Press **Enter** — Replit will open and start importing automatically.
+3. Log in to Replit if prompted.
+4. When import finishes, you’ll see the project (files, editor, etc.).
 
-### الطريقة المُوجّهة (Guided import)
+### Guided import
 
-1. اذهب إلى **[replit.com/import](https://replit.com/import)**.
-2. اختر **GitHub** كمصدر الاستيراد.
-3. **اربط حساب GitHub** إذا لم يكن مربوطاً.
-4. ابحث عن المستودع **`Fullstack-React-Node-MongoPostgreSQL-`** أو المستودع الذي يخصك واختره.
-5. اضغط **Import** وأكمل الخطوات حتى ينتهي الاستيراد.
+1. Go to **[replit.com/import](https://replit.com/import)**.
+2. Select **GitHub** as the import source.
+3. **Connect your GitHub account** if needed.
+4. Search for the repo **`Fullstack-React-Node-MongoPostgreSQL-`** (or yours) and select it.
+5. Click **Import** and complete the steps.
 
-بعد الاستيراد، المشروع يظهر كـ **Replit App** — يمكنك فتح الملفات، التشغيل، وإضافة Secrets (مثل `MONGODB_URI`, `JWT_SECRET`) كما هو موضّح أدناه.
+After importing, the project appears as a **Replit App**. You can open files, run it, and add Secrets (`MONGODB_URI`, `JWT_SECRET`) as described below.
 
 ---
 
@@ -37,42 +37,42 @@ This project can run on [Replit](https://replit.com) with the frontend and backe
 
 ---
 
-## Run button (مُوصى به): سكربت واحد يُشغّل الاثنين
+## Run button (recommended): single script runs both
 
-المشروع يتضمّن `.replit` و `scripts/start-replit.sh`. عند الضغط على **Run**:
+The project includes `.replit` and `scripts/start-replit.sh`. When you press **Run**:
 
-1. يُثبَّت `npm` للـ backend والـ frontend.
-2. يُشغَّل الـ backend على المنفذ **3001**.
-3. يُشغَّل الـ frontend (Vite) على المنفذ **5000** مع `host: true` (للـ Replit Preview).
+1. `npm install` runs for backend and frontend.
+2. Backend starts on port **3001**.
+3. Frontend (Vite) starts on port **5000** with `host: true` (for Replit Preview).
 
-**المتطلّبات:**
+**Requirements:**
 
-- **Secrets** (أدوات Replit → Secrets): أضف `MONGODB_URI` و `JWT_SECRET`.
-- الـ frontend يستخدم `VITE_PROXY_TARGET=http://localhost:3001` و `VITE_PORT=5000` من `.replit` → `[run.env]`.
+- **Secrets** (Replit tools → Secrets): add `MONGODB_URI` and `JWT_SECRET`.
+- Frontend uses `VITE_PROXY_TARGET=http://localhost:3001` and `VITE_PORT=5000` from `.replit` → `[run.env]`.
 
-**المعاينة:** اختر المنفذ **80** (أو **5000**) في قائمة المنافذ في الـ Preview لرؤية الواجهة.
+**Preview:** In Replit, open **Preview** and choose port **80** or **5000** to view the app.
 
 ---
 
-## بديل: Workflows (عمليتان منفصلتان)
+## Alternative: Workflows (two separate processes)
 
-إذا لم يعمل الـ Run الموحّد، استخدم **Workflows** بتشغيل عمليتين **بالتوازي**:
+If the single Run script does not work, use **Workflows** to run two processes in **parallel**:
 
-1. **Workflows** (أو ⌘K → Workflows) → **+ New Workflow**.
-2. أنشئ workflow باسم **Backend**:
+1. Open **Workflows** (or ⌘K → Workflows) → **+ New Workflow**.
+2. Create a **Backend** workflow:
    - **Execute Shell Command**: `cd backend && npm install && npm run dev`
-   - وضع التنفيذ: **Sequential** (أو افتراضي).
-3. أنشئ workflow باسم **Frontend**:
+   - Execution mode: **Sequential** (or default).
+3. Create a **Frontend** workflow:
    - **Execute Shell Command**: `cd frontend && npm install && npm run dev`
-   - نفس الوضع.
-4. أنشئ workflow **Fullstack**:
+   - Same mode.
+4. Create a **Fullstack** workflow:
    - **Run Workflow** → Backend  
    - **Run Workflow** → Frontend  
-   - وضع التنفيذ: **Parallel**.
-5. عيّن **Fullstack** كـ workflow للزر **Run** (القائمة بجانب Run).
-6. في **Secrets** أضف: `PORT=3001`, `MONGODB_URI`, `JWT_SECRET`, `VITE_PORT=5000`, `VITE_PROXY_TARGET=http://localhost:3001`.
+   - Execution mode: **Parallel**.
+5. Assign **Fullstack** as the workflow for the **Run** button (dropdown next to Run).
+6. In **Secrets**, add: `PORT=3001`, `MONGODB_URI`, `JWT_SECRET`, `VITE_PORT=5000`, `VITE_PROXY_TARGET=http://localhost:3001`.
 
-شغّل **Fullstack** وتأكّد أن الـ Console يعرض خرج الـ backend والـ frontend معاً.
+Run **Fullstack** and confirm the Console shows output from both backend and frontend.
 
 ---
 
@@ -137,17 +137,17 @@ After fixing, you should see the specific 503 messages above instead of a generi
 - [ ] Frontend running on port 5000
 - [ ] `MONGODB_URI` set (Secrets)
 - [ ] `JWT_SECRET` set (Secrets)
-- [ ] `VITE_PROXY_TARGET=http://localhost:3001` و `VITE_PORT=5000` (في `.replit` أو Secrets عند استخدام Workflows)
+- [ ] `VITE_PROXY_TARGET=http://localhost:3001` and `VITE_PORT=5000` (in `.replit` or Secrets when using Workflows)
 
 ---
 
-## 6. Vite لا يبدأ / Frontend لا يظهر
+## 6. Vite won't start / Frontend not showing
 
-إذا كان الـ **Backend** يعمل والـ **Frontend** (Vite) لا يظهر:
+If **Backend** runs but **Frontend** (Vite) does not appear:
 
-1. **`host: true`** — تمت إضافته في `vite.config.ts` حتى يستمع Vite على `0.0.0.0` (مطلوب لـ Replit Preview).
-2. **تشغيل الأمرين معاً** — استخدام `&` في سطر واحد أحياناً يفشل. استخدم إمّا:
-   - **`scripts/start-replit.sh`** (الـ Run الحالي)، أو  
-   - **Workflows** بعمليتين (Backend + Frontend) **Parallel** كما في القسم أعلاه.
-3. **المنفذ 5000** — تأكّد أن لا يستهلكه بروسيس آخر. الـ Run script يُشغّل الـ backend أولاً على 3001 ثم الـ frontend على 5000.
-4. **المعاينة** — في Replit افتح **Preview** واختر المنفذ **80** أو **5000** (الواجهة).
+1. **`host: true`** — Added in `vite.config.ts` so Vite listens on `0.0.0.0` (required for Replit Preview).
+2. **Running both** — Using `&` in a single line sometimes fails. Use either:
+   - **`scripts/start-replit.sh`** (current Run setup), or  
+   - **Workflows** with two processes (Backend + Frontend) in **Parallel** as above.
+3. **Port 5000** — Ensure no other process uses it. The Run script starts backend on 3001 first, then frontend on 5000.
+4. **Preview** — In Replit, open **Preview** and select port **80** or **5000** for the app.
