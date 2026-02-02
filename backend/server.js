@@ -79,9 +79,12 @@ app.use((req, res) => {
 
 // Environment variables
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGODB_URI;
+const MONGO_URI = process.env.MONGODB_URI || (process.env.NODE_ENV !== 'production' ? 'mongodb://localhost:27017/fullstack-app' : null);
 const JWT_SECRET = process.env.JWT_SECRET;
 
+if (!process.env.MONGODB_URI && process.env.NODE_ENV !== 'production') {
+  console.log('📦 Using default: mongodb://localhost:27017/fullstack-app');
+}
 if (!MONGO_URI) {
   console.warn('⚠️  MONGODB_URI not set. Set it in .env or environment variables for auth/tasks.');
 }
@@ -97,7 +100,11 @@ const connectDB = async () => {
       console.error('Invalid MongoDB URI. Must start with mongodb:// or mongodb+srv://');
       return false;
     }
-    await mongoose.connect(MONGO_URI);
+    await mongoose.connect(MONGO_URI, {
+      serverSelectionTimeoutMS: 15000,
+      connectTimeoutMS: 15000,
+      family: 4,
+    });
     console.log('✅ MongoDB connected');
     const dbName = mongoose.connection.db?.databaseName;
     if (dbName) console.log(`📊 Database: ${dbName}`);
